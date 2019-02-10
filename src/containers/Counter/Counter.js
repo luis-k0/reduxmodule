@@ -54,7 +54,10 @@ class Counter extends Component {
           clicked={this.props.onSubtractCounter}
         />
         <hr />
-        <button onClick={this.props.onStoreResult}>Store Result</button>
+        {/* this.props.ctr para passar o valor pq depois da separação dos reducers o result.js não tem mais acesso ao state do counter.js e vice versa */}
+        <button onClick={() => this.props.onStoreResult(this.props.ctr)}>
+          Store Result
+        </button>
         <ul>
           {this.props.storedResults.map(strResult => (
             <li
@@ -72,8 +75,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
   return {
-    ctr: state.counter,
-    storedResults: state.results
+    ctr: state.ctr.counter, // .ctr por causa do reducer separado
+    storedResults: state.res.results //.res por causa do reducer separado
   };
 };
 
@@ -83,7 +86,8 @@ const mapDispatchToProps = dispatch => {
     onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
     onAddCounter: () => dispatch({ type: actionTypes.ADD, value: 5 }),
     onSubtractCounter: () => dispatch({ type: actionTypes.SUBTRACT, value: 5 }),
-    onStoreResult: () => dispatch({ type: actionTypes.STORE_RESULT }),
+    onStoreResult: result =>
+      dispatch({ type: actionTypes.STORE_RESULT, result: result }), // result é para passar o valor, pq o reducer do result não tem mais acesso ao counter do state depois da separação dos reducers
     onDeleteResult: id =>
       dispatch({ type: actionTypes.DELETE_RESULT, resultElId: id }) // ver onDeleteResult no render para entender como é passado o parâmetro
   };

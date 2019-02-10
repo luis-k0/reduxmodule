@@ -1,8 +1,7 @@
-import * as actionTypes from "./actions";
+import * as actionTypes from "../actions";
 
 const initialState = {
-  counter: 0,
-  results: []
+  counter: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,27 +31,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         counter: state.counter - action.value
       };
-    case actionTypes.STORE_RESULT:
-      return {
-        ...state,
-        results: state.results.concat({ id: new Date(), value: state.counter }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
-      };
-    case actionTypes.DELETE_RESULT:
-      // um forma de excluir uma posição do array immutabily way
-      // const id = 2; // id q a ser excluído, só um exemplo
-      // const newArray = [...state.results]; // criando uma cópia do results
-      // newArray.splice(id, 1); // excluindo a posição do array
+    // case actionTypes.STORE_RESULT:
+    //   return {
+    //     ...state,
+    //     results: state.results.concat({ id: new Date(), value: state.counter }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
+    //   };
+    // case actionTypes.DELETE_RESULT:
+    //   // um forma de excluir uma posição do array immutabily way
+    //   // const id = 2; // id q a ser excluído, só um exemplo
+    //   // const newArray = [...state.results]; // criando uma cópia do results
+    //   // newArray.splice(id, 1); // excluindo a posição do array
 
-      // outra forma de excluir usando filter
-      // filter retorna um novo array, immutabily way
-      const updatedArray = state.results.filter(
-        result => result.id !== action.resultElId
-      );
+    //   // outra forma de excluir usando filter
+    //   // filter retorna um novo array, immutabily way
+    //   const updatedArray = state.results.filter(
+    //     result => result.id !== action.resultElId
+    //   );
 
-      return {
-        ...state,
-        results: updatedArray
-      };
+    //   return {
+    //     ...state,
+    //     results: updatedArray
+    //   };
   }
 
   return state;
