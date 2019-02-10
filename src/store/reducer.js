@@ -1,3 +1,5 @@
+import * as actionTypes from "./actions";
+
 const initialState = {
   counter: 0,
   results: []
@@ -5,7 +7,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INCREMENT":
+    case actionTypes.INCREMENT:
       const newState = Object.assign({}, state); // fazendo uma cópia do state
       newState.counter = state.counter + 1;
       return newState;
@@ -13,29 +15,29 @@ const reducer = (state = initialState, action) => {
     // return {
     //   counter: state.counter + 1
     // };
-    case "DECREMENT":
+    case actionTypes.DECREMENT:
       // opção de atualização com spread
 
       return {
         ...state, // criado novo objeto cópia do state
         counter: state.counter - 1 // atualizando o counter do novo objeto, se não existir é incluído
       };
-    case "ADD":
+    case actionTypes.ADD:
       return {
         ...state,
         counter: state.counter + action.value
       };
-    case "SUBTRACT":
+    case actionTypes.SUBTRACT:
       return {
         ...state,
         counter: state.counter - action.value
       };
-    case "STORE_RESULT":
+    case actionTypes.STORE_RESULT:
       return {
         ...state,
         results: state.results.concat({ id: new Date(), value: state.counter }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
       };
-    case "DELETE_RESULT":
+    case actionTypes.DELETE_RESULT:
       // um forma de excluir uma posição do array immutabily way
       // const id = 2; // id q a ser excluído, só um exemplo
       // const newArray = [...state.results]; // criando uma cópia do results
