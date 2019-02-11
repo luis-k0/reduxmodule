@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-// import reducer from "./store/reducer";
+// import reducer from "./store/reducer";  // comentado pq os reducers foram separados abaixo
 import counterReducer from "./store/reducers/counter";
 import resultReducer from "./store/reducers/result";
 
