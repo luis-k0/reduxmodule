@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
-import * as actionTypes from "../../store/actions";
+// import * as actionTypes from "../../store/actions/actions";
+import * as actionCreators from "../../store/actions/actions";
 
 class Counter extends Component {
   // state = {
@@ -82,14 +83,20 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter: () => dispatch({ type: actionTypes.INCREMENT }),
-    onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
-    onAddCounter: () => dispatch({ type: actionTypes.ADD, value: 5 }),
-    onSubtractCounter: () => dispatch({ type: actionTypes.SUBTRACT, value: 5 }),
-    onStoreResult: result =>
-      dispatch({ type: actionTypes.STORE_RESULT, result: result }), // result é para passar o valor, pq o reducer do result não tem mais acesso ao counter do state depois da separação dos reducers
-    onDeleteResult: id =>
-      dispatch({ type: actionTypes.DELETE_RESULT, resultElId: id }) // ver onDeleteResult no render para entender como é passado o parâmetro
+    // onIncrementCounter: () => dispatch({ type: actionTypes.INCREMENT }), // retirado com o action creator
+    onIncrementCounter: () => dispatch(actionCreators.increment()),
+    // onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
+    onDecrementCounter: () => dispatch(actionCreators.decrement()),
+    // onAddCounter: () => dispatch({ type: actionTypes.ADD, value: 5 }),
+    onAddCounter: () => dispatch(actionCreators.add(5)),
+    // onSubtractCounter: () => dispatch({ type: actionTypes.SUBTRACT, value: 5 }),
+    onSubtractCounter: () => dispatch(actionCreators.subtract(5)),
+    // onStoreResult: result =>
+    //   dispatch({ type: actionTypes.STORE_RESULT, result: result }), // result é para passar o valor, pq o reducer do result não tem mais acesso ao counter do state depois da separação dos reducers
+    onStoreResult: result => dispatch(actionCreators.storeResult(result)), // result é para passar o valor, pq o reducer do result não tem mais acesso ao counter do state depois da separação dos reducers
+    // onDeleteResult: id =>
+    //   dispatch({ type: actionTypes.DELETE_RESULT, resultElId: id }) // ver onDeleteResult no render para entender como é passado o parâmetro
+    onDeleteResult: id => dispatch(actionCreators.deleteResult(id)) // ver onDeleteResult no render para entender como é passado o parâmetro
   };
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 // combineReducers para juntar os reducers counter e result
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 
 import "./index.css";
@@ -17,9 +17,26 @@ const rootReducer = combineReducers({
   res: resultReducer
 });
 
+const logger = store => {
+  return next => {
+    return action => {
+      console.log("[Middleware] Dispatching", action);
+      const result = next(action);
+      console.log("[Middleware] next state", store.getState());
+      return result;
+    };
+  };
+};
+
+// usado pelo redux devtools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // criando o store do redux
 // const store = createStore(reducer); // criando store para o reducer único
-const store = createStore(rootReducer); // criando o store para o reducer combinado
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(logger))
+); // criando o store para o reducer combinado
 
 ReactDOM.render(
   <Provider store={store}>
