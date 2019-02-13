@@ -1,7 +1,15 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   results: []
+};
+
+const deleteResult = (state, action) => {
+  const updatedArray = state.results.filter(
+    result => result.id !== action.resultElId
+  );
+  return updateObject(state, { results: updatedArray });
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,11 +40,15 @@ const reducer = (state = initialState, action) => {
     //     counter: state.counter - action.value
     //   };
     case actionTypes.STORE_RESULT:
-      return {
-        ...state,
-        // results: state.results.concat({ id: new Date(), value: state.counter }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
-        results: state.results.concat({ id: new Date(), value: action.result }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
-      };
+      return updateObject(state, {
+        results: state.results.concat({ id: new Date(), value: action.result })
+      });
+    // comentado pois passou a ser feito pelo updateObject acima
+    // return {
+    //     ...state,
+    //     // results: state.results.concat({ id: new Date(), value: state.counter }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
+    //     results: state.results.concat({ id: new Date(), value: action.result }) // concat retorna um novo array, immutabily way. se usar push vai alterar o state original, não  a cópia
+    //   };
     case actionTypes.DELETE_RESULT:
       // um forma de excluir uma posição do array immutabily way
       // const id = 2; // id q a ser excluído, só um exemplo
@@ -45,14 +57,19 @@ const reducer = (state = initialState, action) => {
 
       // outra forma de excluir usando filter
       // filter retorna um novo array, immutabily way
-      const updatedArray = state.results.filter(
-        result => result.id !== action.resultElId
-      );
+      // comentado pois passou para o deleteResult
+      // const updatedArray = state.results.filter(
+      //   result => result.id !== action.resultElId
+      // );
 
-      return {
-        ...state,
-        results: updatedArray
-      };
+      // comentado pois passou para o deleteResult
+      // return updateObject(state, { results: updatedArray });
+      // comentado pois passou a ser feito pelo updateObject acima
+      // return {
+      //     ...state,
+      //     results: updatedArray
+      //   };
+      return deleteResult(state, action);
   }
 
   return state;

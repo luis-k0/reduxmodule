@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   counter: 0
@@ -7,30 +8,37 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT:
-      const newState = Object.assign({}, state); // fazendo uma cópia do state
-      newState.counter = state.counter + 1;
-      return newState;
+      return updateObject(state, { counter: state.counter + 1 });
+    // comentado pois passou a ser feito pelo updateObject acima
+    // const newState = Object.assign({}, state); // fazendo uma cópia do state
+    // newState.counter = state.counter + 1;
+    // return newState;
     // comentado com a entrada do results no state, com isso é preciso fazer como acima
     // return {
     //   counter: state.counter + 1
     // };
     case actionTypes.DECREMENT:
-      // opção de atualização com spread
-
-      return {
-        ...state, // criado novo objeto cópia do state
-        counter: state.counter - 1 // atualizando o counter do novo objeto, se não existir é incluído
-      };
+      return updateObject(state, { counter: state.counter - 1 });
+    // comentado pois passou a ser feito pelo updateObject acima
+    // // opção de atualização com spread
+    // return {
+    //   ...state, // criado novo objeto cópia do state
+    //   counter: state.counter - 1 // atualizando o counter do novo objeto, se não existir é incluído
+    // };
     case actionTypes.ADD:
-      return {
-        ...state,
-        counter: state.counter + action.value
-      };
+      return updateObject(state, { counter: state.counter + action.value });
+    // comentado pois passou a ser feito pelo updateObject acima
+    // return {
+    //     ...state,
+    //     counter: state.counter + action.value
+    //   };
     case actionTypes.SUBTRACT:
-      return {
-        ...state,
-        counter: state.counter - action.value
-      };
+      return updateObject(state, { counter: state.counter - action.value });
+    // comentado pois passou a ser feito pelo updateObject acima
+    // return {
+    //   ...state,
+    //   counter: state.counter - action.value
+    // };
     // case actionTypes.STORE_RESULT:
     //   return {
     //     ...state,
