@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
   res: resultReducer
 });
 
+// middleware
 const logger = store => {
   return next => {
     return action => {
