@@ -20,7 +20,6 @@ export const storeResult = res => {
       dispatch(saveResult(res));
     }, 2000);
   };
-  return;
 };
 // FIM  -
 
